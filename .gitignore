@@ -52,3 +52,8 @@ coverage.xml
 # Sphinx documentation
 docs/_build/
 
+# Eclipse & pydev
+.settings
+
+# OS X Junk
+.DS_Store
