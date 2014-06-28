@@ -13,5 +13,5 @@ manifest:
 clean:
 	-rm -rf dist
 	-rm MANIFEST
-	-rm build
+	-rm -rf build
 	-rm -rf pymemento.egg-info
