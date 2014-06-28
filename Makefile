@@ -1,11 +1,14 @@
 all: test dist
 
 dist:
-	python setup.py dist
+	python setup.py sdist --formats=gztar,zip
 
 test:
-	echo "Not implemented yet"
+	@echo "Testing not implemented yet"
+
+manifest:
+	python setup.py sdist --manifest-only
 
 clean:
 	-rm -rf dist
-	rm MANIFEST
+	-rm MANIFEST
