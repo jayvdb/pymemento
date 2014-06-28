@@ -29,7 +29,7 @@ You may get a warning:
 ```
     UserWarning: Unknown distribution option: 'install_requires'
 ```
-This is, unfortunately, to be expected, as distutils doesn't support this option, but easy_install and pip do.
+This is, unfortunately, to be expected, as distutils doesn't support this option, but easy_install and pip do.  See:  http://stackoverflow.com/questions/8295644/pypi-userwarning-unknown-distribution-option-install-requires
 
 To start fresh
 ```
