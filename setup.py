@@ -1,4 +1,4 @@
-from distutils.core import setup
+from setuptools import setup
 
 setup(
     name='pymemento',
@@ -13,4 +13,6 @@ setup(
     install_requires=[
         'python-dateutil',
     ],
+    keywords='memento http',
+
 )
