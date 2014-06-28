@@ -25,11 +25,6 @@ To build this distribution, just type
 
 and it will create a dist folder containing a tar.gz, tar.bz2, and zip file with this distribution within it.
 
-You may get a warning:
-```
-    UserWarning: Unknown distribution option: 'install_requires'
-```
-This is, unfortunately, to be expected, as distutils doesn't support this option, but easy_install and pip do.  See:  http://stackoverflow.com/questions/8295644/pypi-userwarning-unknown-distribution-option-install-requires
 
 To start fresh
 ```
