@@ -1,7 +1,7 @@
 all: test dist
 
 dist:
-	python setup.py sdist --formats=gztar,zip
+	python setup.py sdist --formats=bztar,gztar,zip
 
 test:
 	@echo "Testing not implemented yet"

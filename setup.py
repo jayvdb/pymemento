@@ -10,4 +10,7 @@ setup(
     license='LICENSE.txt',
     description='Official Python library for using the Memento Protocol',
     long_description=open('README.md').read(),
+    install_requires=[
+        'python-dateutil',
+    ],
 )

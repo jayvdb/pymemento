@@ -16,3 +16,23 @@ This source distribution contains the following folders
 * setup.cfg - Pypi configuration information for this source tree
 * setup.py - Python script providing information for distutils
 * bin - a useful scripts folder containing scripts using the library
+
+Building this source distribution:
+To build this distribution, just type
+```
+    make
+```
+
+and it will create a dist folder containing a tar.gz, tar.bz2, and zip file with this distribution within it.
+
+You may get a warning:
+```
+    UserWarning: Unknown distribution option: 'install_requires'
+```
+This is, unfortunately, to be expected, as distutils doesn't support this option, but easy_install and pip do.
+
+To start fresh
+```
+    make clean
+```
+will remove the dist folder and the generated MANIFEST file.
