@@ -9,7 +9,7 @@ setup(
     url='https://github.com/mementoweb/pymemento',
     license='LICENSE.txt',
     description='Official Python library for using the Memento Protocol',
-    long_description=open('README.md').read(),
+    long_description=open('README.txt').read(),
     install_requires=[
         'python-dateutil',
     ],
