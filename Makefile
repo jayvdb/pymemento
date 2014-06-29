@@ -18,3 +18,5 @@ clean:
 	-rm MANIFEST
 	-rm -rf build
 	-rm -rf pymemento.egg-info
+	-find . -type f -name '*.pyc' -exec rm {} \;
+	-find . -type d -name '__pycache__' -exec rm -rf {} \;
