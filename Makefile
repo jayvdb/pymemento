@@ -10,6 +10,9 @@ test:
 manifest:
 	python setup.py sdist --manifest-only
 
+install:
+	python setup.py install
+
 clean:
 	-rm -rf dist
 	-rm MANIFEST
