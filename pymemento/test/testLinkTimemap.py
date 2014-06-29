@@ -33,6 +33,7 @@ class TestLinkTimemap(unittest.TestCase):
 """
 
         original = "http://a.example.org"
+
         expectedTimegate = "http://arxiv.example.net/timegate/http://a.example.org"
         expectedTimeMapURI = "http://arxiv.example.net/timemap/http://a.example.org"
         expectedFirstMementoURI = "http://arxiv.example.net/web/20000620180259/http://a.example.org"
@@ -46,6 +47,11 @@ class TestLinkTimemap(unittest.TestCase):
             "http://arxiv.example.net/web/20091027204954/http://a.example.org",
         ]
 
+
+        expectedFrom = "Tue, 20 Jun 2000 18:02:59 UTC"
+        expectedUntil = "Wed, 09 Apr 2008 20:30:51 UTC"
+        expectedMimeType = "application/link-format"
+
         tm = pymemento.LinkTimemap.from_string(timemap, original)
 
         self.assertEquals(original, tm.original_uri,
@@ -54,6 +60,10 @@ class TestLinkTimemap(unittest.TestCase):
             "timegate URI does not match")
         self.assertEquals(expectedTimeMapURI, tm.timemaps[0].uri_t,
             "timemap URI does not match")
+
+        self.assertEquals(expectedFrom, tm.timemaps[0].from_dt.strftime("%a, %d %b %Y %H:%M:%S UTC"))
+        self.assertEquals(expectedUntil, tm.timemaps[0].until_dt.strftime("%a, %d %b %Y %H:%M:%S UTC"))
+        self.assertEquals(expectedMimeType, tm.timemaps[0].mime_type)
 
         foundFirst = False
         foundLast = False
@@ -79,8 +89,8 @@ class TestLinkTimemap(unittest.TestCase):
                     expectedLicense, i.license_uri,
                     "unexpected license " + i.license_uri)
 
-        self.assertTrue(foundFirst, "did not find first memento")
-        self.assertTrue(foundLast, "did not find last memento")
+        self.assertTrue(foundFirst, "did not find first memento from relations")
+        self.assertTrue(foundLast, "did not find last memento from relations")
 
 
 if __name__ == '__main__':
