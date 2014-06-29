@@ -36,8 +36,6 @@ class TestLinkTimemap(unittest.TestCase):
         expectedTimegate = "http://arxiv.example.net/timegate/http://a.example.org"
         expectedTimeMapURI = "http://arxiv.example.net/timemap/http://a.example.org"
         expectedFirstMementoURI = "http://arxiv.example.net/web/20000620180259/http://a.example.org"
-        expectedSecondMementoURI = "http://arxiv.example.net/web/20000621011731/http://a.example.org"
-        expectedThirdMementoURI = "http://arxiv.example.net/web/20000621044156/http://a.example.org"
         expectedLastMementoURI = "http://arxiv.example.net/web/20091027204954/http://a.example.org"
         expectedLicense = "http://creativecommons.org/publicdomain/zero/1.0/" 
 
@@ -58,8 +56,6 @@ class TestLinkTimemap(unittest.TestCase):
             "timemap URI does not match")
 
         foundFirst = False
-        foundSecond = False
-        foundThird = False
         foundLast = False
 
         for key in tm.mementos.keys():
