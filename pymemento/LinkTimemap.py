@@ -8,7 +8,7 @@ from datetime import datetime
 import dateutil.parser
 import dateutil.tz
 import re
-import StringIO
+import io
 import urllib2
 import urlparse
 
@@ -155,7 +155,7 @@ class LinkTimemap(object):
         Returns:
             A LinkTimemap.
         """
-        with StringIO.StringIO(timemap_text) as tmfile:
+        with io.BytesIO(timemap_text) as tmfile:
             parser = LinkTimemap._link_stream(tmfile)
             timemap = LinkTimemap._from_link_stream(parser, base_uri)
         return timemap
@@ -243,15 +243,20 @@ class LinkTimemap(object):
         original_uri = None   # The original IRI-R
         timegates    = []     # List of timegate linkss in this timemap
         timemaps     = []     # List of timemap links in this timemap
-        mementos     = dict() # List of mement links in this timemap
+        mementos     = dict() # List of memento links in this timemap
         for link in link_stream:
             (rels, uri, memento_datetime, mime_type, license) = link[:5]
             if 'memento' in rels:
+
                 if memento_datetime not in mementos:
                     mementos[memento_datetime] = set()
                 uri_m = urlparse.urljoin(base_uri, uri)
+
+
                 mementos[memento_datetime].add(
-                        MementoLink(uri_m, rels, license))
+                        MementoLink(memento_datetime, uri_m, rels, license)
+                        )
+                
             elif 'original' in rels:
                 original_uri = urlparse.urljoin(base_uri, uri)
             elif 'timegate' in rels:
@@ -265,6 +270,7 @@ class LinkTimemap(object):
                     timemaps.insert(0, timemap_link)
                 else:
                     timemaps.append(timemap_link)
+
         timemap = LinkTimemap(original_uri, timegates, timemaps, mementos)
         return timemap
 
@@ -298,8 +304,8 @@ class LinkTimemap(object):
                 rels = token[5:-1].split()
             elif token[:5] == 'type=':
                 mime_type = token[6:-1]
-            elif token[:7] == 'license=':
-                mime_type = token[8:-1]
+            elif token[:8] == 'license=':
+                license = token[9:-1]
             elif token == ';':
                 pass
             elif token == ',':

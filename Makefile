@@ -5,7 +5,7 @@ dist:
 	python setup.py bdist_egg
 
 test:
-	@echo "Testing not implemented yet"
+	(cd pymemento/test && python -m unittest discover)
 
 manifest:
 	python setup.py sdist --manifest-only
