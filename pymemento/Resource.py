@@ -5,20 +5,19 @@ from __future__ import unicode_literals
 import requests
 
 
-class OriginalResource(object):
+class Resource(object):
     """
-        Class for getting information about a URI-R (original resource) from
-        the response headers returned from a request sent to the URI-R.
-        originaURI - the URI-R
+        Class for getting Memento information about a URI from
+        the response headers returned from a request sent to the URI.
     """
 
-    def __init__(self, originalURI):
+    def __init__(self, URI):
         """
             Initialize the private member variables.
 
             Other data is lazy-loaded.
         """
-        self._urir = originalURI
+        self._uri = URI
         self._headers = None
 
     def getURIFromRelation(self, relation):
@@ -26,26 +25,24 @@ class OriginalResource(object):
             Get the URI from the Link header associated with the given
             relation.
         """
-      
-        performRequestIfNecessary()
-
+        self.performRequestIfNecessary()
         return self._getURIFromRelation(self._headers, relation)
 
-    def performRequestIfNecessary():
+    def performRequestIfNecessary(self):
         """
             This is the lazy loading for this class.  If we haven't 
             performed the request yet, do so to fill the private
             member variables.
         """
         if self._headers == None:
-            repeatRequest()
+            self.repeatRequest()
 
-    def repeatRequest():
+    def repeatRequest(self):
         """
-            Using the same URI-R, re-execute the request to fill the
+            Using the same URI, re-execute the request to fill the
             response headers list.
         """
-        r = requests.head(url=self._urir)
+        r = requests.head(url=self._uri)
         self._headers = r.headers
 
     def _getURIFromRelation(self, headers, relation):

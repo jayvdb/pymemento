@@ -6,22 +6,22 @@ import pymemento
 
 pp = pprint.PrettyPrinter(indent=4)
 
-class TestOriginalResource(unittest.TestCase):
+class TestResource(unittest.TestCase):
 
     def test_getURIsFromHeaders(self):
       
         d = {'content-length': '190159', 'x-varnish': '705785075', 'x-content-type-options': 'nosniff', 'content-language': 'en', 'age': '0', 'vary': 'Accept-Encoding,Cookie', 'server': 'Apache', 'last-modified': 'Sat, 17 May 2014 16:48:28 GMT', 'connection': 'keep-alive', 'via': '1.1 varnish', 'link': '<http://ws-dl-05.cs.odu.edu/demo/index.php/Tyrion_Lannister>; rel="original latest-version",<http://ws-dl-05.cs.odu.edu/demo/index.php/Special:TimeGate/Tyrion_Lannister>; rel="timegate",<http://ws-dl-05.cs.odu.edu/demo/index.php/Special:TimeMap/Tyrion_Lannister>; rel="timemap"; type="application/link-format"', 'cache-control': 's-maxage=18000, must-revalidate, max-age=0', 'date': 'Sun, 29 Jun 2014 16:42:12 GMT', 'content-type': 'text/html; charset=UTF-8'}
 
-        originalURI = 'http://ws-dl-05.cs.odu.edu/demo/index.php/Tyrion_Lannister'
+        URI = 'http://ws-dl-05.cs.odu.edu/demo/index.php/Tyrion_Lannister'
         expectedURIG = 'http://ws-dl-05.cs.odu.edu/demo/index.php/Special:TimeGate/Tyrion_Lannister'
         expectedURIT = 'http://ws-dl-05.cs.odu.edu/demo/index.php/Special:TimeMap/Tyrion_Lannister'
 
         inputHeaders = requests.structures.CaseInsensitiveDict(d)
 
-        orig = pymemento.OriginalResource(originalURI)
+        resource = pymemento.Resource(URI)
 
-        actualURIG = orig._getURIFromRelation(inputHeaders, 'timegate')
-        actualURIT = orig._getURIFromRelation(inputHeaders, 'timemap')
+        actualURIG = resource._getURIFromRelation(inputHeaders, 'timegate')
+        actualURIT = resource._getURIFromRelation(inputHeaders, 'timemap')
 
         self.assertEquals(expectedURIG, actualURIG, 'URI-G ' + str(actualURIG) + ' is incorrect')
         self.assertEquals(expectedURIT, actualURIT, 'URI-T ' + str(actualURIT) + ' is incorrect')
@@ -39,9 +39,9 @@ class TestOriginalResource(unittest.TestCase):
         inputHeaders['date'] = 'Sun, 29 Jun 2014 16:22:31 GMT'
         inputHeaders['content-type'] = 'text/html; charset=UTF-8'
 
-        originalURI = 'http://www.littleprojects.net'
+        URI = 'http://www.littleprojects.net'
 
-        orig = pymemento.OriginalResource(originalURI)
+        resource = pymemento.Resource(URI)
 
-        self.assertIsNone(orig._getURIFromRelation(inputHeaders, 'timegate'))
-        self.assertIsNone(orig._getURIFromRelation(inputHeaders, 'timemap'))
+        self.assertIsNone(resource._getURIFromRelation(inputHeaders, 'timegate'))
+        self.assertIsNone(resource._getURIFromRelation(inputHeaders, 'timemap'))
