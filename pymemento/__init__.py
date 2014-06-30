@@ -4,5 +4,7 @@ from __future__ import unicode_literals
 
 from .LinkTimemap import LinkTimemap
 from .Resource import Resource
+from .Resource import OriginalResource
+from .Resource import MementoResource
 
 #end

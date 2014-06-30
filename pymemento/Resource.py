@@ -15,10 +15,11 @@ class Resource(object):
         """
             Initialize the private member variables.
 
-            Other data is lazy-loaded.
+            Data other than the URI is lazy-loaded.
         """
         self._uri = URI
         self._headers = None
+        self._request = None
 
     def getURIFromRelation(self, relation):
         """
@@ -42,16 +43,42 @@ class Resource(object):
             Using the same URI, re-execute the request to fill the
             response headers list.
         """
-        r = requests.head(url=self._uri)
-        self._headers = r.headers
+        self._request = requests.head(url=self._uri)
+        self._headers = self._request.headers
 
     def _getURIFromRelation(self, headers, relation):
         uri = None
 
         if 'link' in headers:
             for entry in requests.utils.parse_header_links(headers['link']):
-                if relation in entry['rel']:
-                    uri = entry['url'] 
-                    break
+                if 'rel' in entry:
+                    if relation in entry['rel']:
+                        uri = entry['url'] 
+                        break
 
         return uri
+
+
+class OriginalResource(Resource):
+    """
+        Class for getting Memento information about an original resource
+        (URI-R).
+    """
+    def isTimeGate(self):
+        """
+            Determine if this URI-R is also operating as a TimeGate.
+        """
+
+        return self._uri == self.getURIFromRelation('timegate') 
+
+
+class MementoResource(Resource):
+    """
+        Class for getting Memento information about a Memento resource
+        (URI-M).
+    """
+    def getMementoDatetime(self):
+        """
+            Extract the Memento-Datetime from the response headers.
+        """
+        return self._headers['Memento-Datetime']
