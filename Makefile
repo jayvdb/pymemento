@@ -5,7 +5,7 @@ dist:
 	python setup.py bdist_egg
 
 test:
-	(cd pymemento/test && python -m unittest discover)
+	(export PYTHONPATH=$(shell pwd):${PYTHONPATH} && cd pymemento/test && python -m unittest discover)
 
 manifest:
 	python setup.py sdist --manifest-only
