@@ -55,5 +55,8 @@ docs/_build/
 # Eclipse & pydev
 .settings
 
+# Editor swap files
+.*.swp
+
 # OS X Junk
 .DS_Store
