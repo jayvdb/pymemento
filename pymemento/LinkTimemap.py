@@ -9,9 +9,9 @@ import dateutil.parser
 import dateutil.tz
 import re
 import io
-import urllib2
 import urlparse
 
+import requests
 
 #==========================================================================
 # Container classes for complex links
@@ -176,9 +176,9 @@ class LinkTimemap(object):
             A LinkTimemap.
         """
         # TODO: add "Accept: application/link-format;q=1.0" HTTP header
-        with urllib2.urlopen(uri_t) as tmfile:
-            parser = LinkTimemap._link_stream(tmfile)
-            timemap = LinkTimemap._from_link_stream(parser, uri_t)
+        req = requests.get(uri_t)
+        parser = LinkTimemap._link_stream(req.text.splitlines())
+        timemap = LinkTimemap._from_link_stream(parser, uri_t)
         return timemap
 
 

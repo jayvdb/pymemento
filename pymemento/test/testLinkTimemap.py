@@ -91,6 +91,18 @@ class TestLinkTimemap(unittest.TestCase):
         self.assertTrue(foundFirst, "did not find first memento from relations")
         self.assertTrue(foundLast, "did not find last memento from relations")
 
+    def test_from_uri(self):
+        uri_r = 'http://ws-dl-05.cs.odu.edu/demo/index.php/Tyrion_Lannister'
+        uri_g = 'http://ws-dl-05.cs.odu.edu/demo/index.php/Special:TimeGate/Tyrion_Lannister'
+        uri_t = 'http://ws-dl-05.cs.odu.edu/demo/index.php/Special:TimeMap/Tyrion_Lannister'
+        tm = pymemento.LinkTimemap.from_uri(uri_t)
+
+        self.assertEquals(uri_r, tm.original_uri,
+            "original URI does not match")
+        self.assertIsNotNone(tm.timemaps)
+        self.assertEquals(uri_t, tm.timemaps[0].uri_t)
+        self.assertIsNotNone(tm.mementos)
+        self.assertEquals([uri_g], tm.timegate_uris)
 
 if __name__ == '__main__':
     suite = unittest.TestLoader().loadTestsFromTestCase(TestLinkTimemap)
