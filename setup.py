@@ -15,5 +15,6 @@ setup(
         'requests',
     ],
     keywords='memento http',
+    test_suite='pymemento.test',
 
 )
