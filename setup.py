@@ -14,5 +14,5 @@ setup(
         'python-dateutil',
     ],
     keywords='memento http',
-
+    test_suite='pymemento.test',
 )
