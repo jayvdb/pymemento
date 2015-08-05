@@ -9,8 +9,15 @@ import dateutil.parser
 import dateutil.tz
 import re
 import io
-import urllib2
-import urlparse
+import sys
+
+if sys.version_info >= (3, ):
+    from urllib.request import urlopen
+    import urllib.parse as urlparse
+    unicode = str
+else:
+    from urllib2 import urlopen
+    import urlparse
 
 
 #==========================================================================
@@ -155,7 +162,7 @@ class LinkTimemap(object):
         Returns:
             A LinkTimemap.
         """
-        with io.BytesIO(timemap_text) as tmfile:
+        with io.StringIO(unicode(timemap_text)) as tmfile:
             parser = LinkTimemap._link_stream(tmfile)
             timemap = LinkTimemap._from_link_stream(parser, base_uri)
         return timemap
@@ -176,7 +183,7 @@ class LinkTimemap(object):
             A LinkTimemap.
         """
         # TODO: add "Accept: application/link-format;q=1.0" HTTP header
-        with urllib2.urlopen(uri_t) as tmfile:
+        with urlopen(uri_t) as tmfile:
             parser = LinkTimemap._link_stream(tmfile)
             timemap = LinkTimemap._from_link_stream(parser, uri_t)
         return timemap
